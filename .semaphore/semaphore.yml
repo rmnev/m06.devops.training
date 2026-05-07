@@ -36,6 +36,4 @@ blocks:
             - 'wget https://github.com/localstack/localstack-cli/releases/download/v4.3.0/localstack-cli-4.3.0-linux-amd64.tar.gz'
             - tar xvzf localstack-cli-4.3.0-linux-amd64.tar.gz
             - localstack/localstack start -d
-            - terraform apply \
-            - '  -var="AWS_ACCESS_KEY_ID=test" \'
-            - '  -var="AWS_SECRET_ACCESS_KEY=test"'
+            - terraform apply -var="AWS_ACCESS_KEY_ID=test" -var="AWS_SECRET_ACCESS_KEY=test"
