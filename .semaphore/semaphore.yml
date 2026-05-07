@@ -29,13 +29,13 @@ blocks:
       - Preparation
     task:
       jobs:
-        - name: "\U0001F4E6 Deploy to Production"
+        - name: Deploy
           commands:
-            - AWS_ACCESS_KEY_ID=test
-            - AWS_SECRET_ACCESS_KEY=test
+            - checkout
+            - cd 1-terraform-apply
             - 'wget https://github.com/localstack/localstack-cli/releases/download/v4.3.0/localstack-cli-4.3.0-linux-amd64.tar.gz'
             - tar xvzf localstack-cli-4.3.0-linux-amd64.tar.gz
             - localstack/localstack start -d
-            - checkout
-            - cd 1-terraform-apply
-            - terraform apply
+            - terraform apply \
+            - '  -var="AWS_ACCESS_KEY_ID=test" \'
+            - '  -var="AWS_SECRET_ACCESS_KEY=test"'
