@@ -17,21 +17,24 @@ blocks:
     dependencies: []
     task:
       jobs:
-        - name: Run localstack
+        - name: Terraform init
           commands:
-            - docker pull localstack/localstack
-            - 'docker run -d -p 4566:4566 -p 4571:4571 --name localstack_container localstack/localstack'
-            - docker logs localstack_container
+            - checkout
+            - cd 1-terraform-apply
+            - terraform init
+            - terraform plan
       secrets:
         - name: localstack
-  - name: "\U0001F680 Deploy"
+  - name: Localstack
     dependencies:
       - Preparation
     task:
       jobs:
         - name: "\U0001F4E6 Deploy to Production"
           commands:
-            - echo "Building application..."
-            - echo "Running security checks..."
-            - echo "Deploying to production..."
-            - echo "Deployment completed successfully!"
+            - AWS_ACCESS_KEY_ID=test
+            - AWS_SECRET_ACCESS_KEY=test
+            - 'wget https://github.com/localstack/localstack-cli/releases/download/v4.3.0/localstack-cli-4.3.0-linux-amd64.tar.gz'
+            - tar xvzf localstack-cli-4.3.0-linux-amd64.tar.gz
+            - localstack/localstack start -d
+            - terraform apply
