@@ -20,8 +20,7 @@ blocks:
         - name: Run localstack
           commands:
             - docker pull localstack/localstack
-            - 'docker run -d -p 4566:4566 -p 4571:4571 --name'
-            - localstack_container localstack/localstack
+            - 'docker run -d -p 4566:4566 -p 4571:4571 --name localstack_container localstack/localstack'
             - docker logs localstack_container
       secrets:
         - name: localstack
