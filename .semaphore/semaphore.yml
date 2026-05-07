@@ -22,7 +22,6 @@ blocks:
             - checkout
             - cd 1-terraform-apply
             - terraform init
-            - terraform plan
       secrets:
         - name: localstack
   - name: Localstack
