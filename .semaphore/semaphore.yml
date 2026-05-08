@@ -21,10 +21,13 @@ blocks:
           commands:
             - checkout
             - cd 1-terraform-apply
+            - export TF_INPUT=0
+            - 'export TF_VAR_AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"'
+            - 'export TF_VAR_AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"'
+            - 'export TF_VAR_AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-east-1}"'
             - terraform init
             - terraform validate
-            - '# Create plan'
-            - terraform plan -out=tfplan
+            - terraform plan -out=tfplan -input=false
             - terraform show tfplan
             - artifact push workflow tfplan
       secrets:
