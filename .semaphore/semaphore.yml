@@ -44,3 +44,7 @@ blocks:
             - terraform init
             - artifact pull workflow tfplan
             - terraform apply -var="AWS_ACCESS_KEY_ID=test" -var="AWS_SECRET_ACCESS_KEY=test"  -auto-approve tfplan
+      agent:
+        machine:
+          type: s1-ubuntu
+          os_image: ubuntu2404
