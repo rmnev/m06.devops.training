@@ -49,7 +49,3 @@ blocks:
             - terraform plan -no-color -input=false -lock-timeout=60s -out=tfplan
             - terraform show -no-color tfplan
             - terraform apply -auto-approve tfplan
-      agent:
-        machine:
-          type: s1-ubuntu
-          os_image: ubuntu2404
