@@ -21,6 +21,8 @@ blocks:
           commands:
             - checkout
             - cd 1-terraform-apply
+            - docker rm -f localstack >/dev/null 2>&1 || true
+            - 'docker run -d --name localstack -p 4566:4566 -e SERVICES=s3,sts,iam,ec2,sqs,sns localstack/localstack:3'
             - export TF_INPUT=0
             - 'export TF_VAR_AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"'
             - 'export TF_VAR_AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"'
