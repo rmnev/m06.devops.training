@@ -38,10 +38,9 @@ blocks:
           commands:
             - heckout
             - cd 1-terraform-apply
-            - 'wget -q https://github.com/localstack/localstack-cli/releases/download/v4.3.0/localstack-cli-4.3.0-linux-amd64.tar.gz'
-            - tar xzf localstack-cli-4.3.0-linux-amd64.tar.gz
-            - chmod +x localstack/localstack
-            - ./localstack/localstack start -d
+            - 'wget https://github.com/localstack/localstack-cli/releases/download/v4.3.0/localstack-cli-4.3.0-linux-amd64.tar.gz'
+            - tar xvzf localstack-cli-4.3.0-linux-amd64.tar.gz
+            - localstack/localstack start -d
             - '# Fail fast if secret vars are missing in this block'
             - ': "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID is not set}"'
             - ': "${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY is not set}"'
