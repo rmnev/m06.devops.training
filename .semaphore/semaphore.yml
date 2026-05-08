@@ -22,6 +22,11 @@ blocks:
             - checkout
             - cd 1-terraform-apply
             - terraform init
+            - terraform validate
+            - '# Create plan'
+            - terraform plan -out=tfplan
+            - terraform show tfplan
+            - artifact push workflow tfplan
       secrets:
         - name: localstack
   - name: Localstack
@@ -37,4 +42,5 @@ blocks:
             - tar xvzf localstack-cli-4.3.0-linux-amd64.tar.gz
             - localstack/localstack start -d
             - terraform init
-            - terraform apply -var="AWS_ACCESS_KEY_ID=test" -var="AWS_SECRET_ACCESS_KEY=test"
+            - artifact pull workflow tfplan
+            - terraform apply -var="AWS_ACCESS_KEY_ID=test" -var="AWS_SECRET_ACCESS_KEY=test"  -auto-approve tfplan
