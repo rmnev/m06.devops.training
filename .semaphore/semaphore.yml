@@ -13,11 +13,11 @@ auto_cancel:
   queued:
     when: branch = 'main'
 blocks:
-  - name: Preparation
+  - name: Terraform
     dependencies: []
     task:
       jobs:
-        - name: Terraform init
+        - name: Init & validate
           commands:
             - checkout
             - cd 1-terraform-apply
@@ -27,26 +27,28 @@ blocks:
             - 'export TF_VAR_AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-east-1}"'
             - terraform init
             - terraform validate
-            - terraform plan -out=tfplan -input=false
-            - terraform show tfplan
-            - artifact push workflow tfplan
       secrets:
         - name: localstack
   - name: Localstack
     dependencies:
-      - Preparation
+      - Terraform
     task:
       jobs:
-        - name: Deploy
+        - name: Run & apply
           commands:
             - checkout
             - cd 1-terraform-apply
             - 'wget https://github.com/localstack/localstack-cli/releases/download/v4.3.0/localstack-cli-4.3.0-linux-amd64.tar.gz'
             - tar xvzf localstack-cli-4.3.0-linux-amd64.tar.gz
             - localstack/localstack start -d
-            - terraform init
-            - artifact pull workflow tfplan
-            - terraform apply -var="AWS_ACCESS_KEY_ID=test" -var="AWS_SECRET_ACCESS_KEY=test"  -auto-approve tfplan
+            - export TF_INPUT=0
+            - 'export TF_VAR_AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"'
+            - 'export TF_VAR_AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"'
+            - 'export TF_VAR_AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-east-1}"'
+            - terraform init -no-color
+            - terraform plan -no-color -input=false -lock-timeout=60s -out=tfplan
+            - terraform show -no-color tfplan
+            - terraform apply -auto-approve tfplan
       agent:
         machine:
           type: s1-ubuntu
