@@ -56,5 +56,6 @@ blocks:
             - terraform plan -no-color -input=false -lock-timeout=60s -out=tfplan
             - terraform show -no-color tfplan
             - terraform apply -no-color -auto-approve tfplan
+            - 'aws --endpoint-url=http://localhost:4566 s3 ls'
       secrets:
         - name: localstack
