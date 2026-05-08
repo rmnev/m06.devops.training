@@ -1,5 +1,5 @@
 version: v1.0
-name: "\U0001F3AF Simple CI Pipeline"
+name: Infrastructre as Code
 agent:
   machine:
     type: f1-standard-2
