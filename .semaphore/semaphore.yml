@@ -41,7 +41,7 @@ blocks:
             - checkout
             - cd 3-terraform-dynamodb
             - docker rm -f localstack >/dev/null 2>&1 || true
-            - 'docker run -d --name localstack -p 4566:4566 -e SERVICES=s3,sts,iam,ec2,sqs,sns localstack/localstack:3'
+            - 'docker run -d --name localstack -p 4566:4566 -e SERVICES=s3,sts,iam,ec2,sqs,sns,dynamodb localstack/localstack:3'
             - sleep 20
             - 'curl -fsS http://localhost:4566/_localstack/health'
             - export TF_INPUT=0
