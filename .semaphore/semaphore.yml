@@ -1,5 +1,5 @@
 version: v1.0
-name: Infrastructre as Code
+name: Infrastructre as Code 2
 agent:
   machine:
     type: f1-standard-2
