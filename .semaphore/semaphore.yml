@@ -17,10 +17,10 @@ blocks:
     dependencies: []
     task:
       jobs:
-        - name: Init & validate 2
+        - name: Init & validate 3
           commands:
             - checkout
-            - cd 2-terraform-ec2
+            - cd 3-terraform-dynamodb
             - docker rm -f localstack >/dev/null 2>&1 || true
             - 'docker run -d --name localstack -p 4566:4566 -e SERVICES=s3,sts,iam,ec2,sqs,sns localstack/localstack:3'
             - export TF_INPUT=0
@@ -36,10 +36,10 @@ blocks:
       - Terraform
     task:
       jobs:
-        - name: Run & apply 2
+        - name: Run & apply 3
           commands:
             - checkout
-            - cd 2-terraform-ec2
+            - cd 3-terraform-dynamodb
             - docker rm -f localstack >/dev/null 2>&1 || true
             - 'docker run -d --name localstack -p 4566:4566 -e SERVICES=s3,sts,iam,ec2,sqs,sns localstack/localstack:3'
             - sleep 20
